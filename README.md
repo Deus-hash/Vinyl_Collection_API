@@ -30,10 +30,6 @@ python -m venv venv
 venv\Scripts\activate
 # Linux/Mac:
 source venv/bin/activate
-
-# Настройте окружение
-cp .env.example .env
-# Отредактируйте .env файл под свои нужды
 ```
 
 ### 2. Установка зависимостей
