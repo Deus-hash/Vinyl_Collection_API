@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Мои альбомы - Vinyl Collection{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Моя коллекция</h1>
+        <p>Всего альбомов: {{ albums|length }}</p>
+    </div>
+
+    <a href="/albums/new" class="btn">+ Добавить альбом</a>
+</div>
+
+<div class="search-box">
+    <form method="get" action="/albums" class="search-form">
+        <input type="text"
+               name="q"
+               value="{{ search_query }}"
+               placeholder="Поиск по названию, исполнителю или жанру..."
+               class="form-control">
+        <button type="submit" class="btn">Найти</button>
+        {% if search_query %}
+            <a href="/albums" class="btn btn-secondary">Сбросить</a>
+        {% endif %}
+    </form>
+</div>
+
+{% if albums %}
+<div class="album-grid">
+    {% for album in albums %}
+    <div class="album-card">
+        <div class="album-cover">
+            {{ album.title[:2] if album.title else "??" }}
+        </div>
+        <div class="album-info">
+            <h3>{{ album.title }}</h3>
+            <p><strong>Исполнитель:</strong> {{ album.artist }}</p>
+            {% if album.genre %}
+            <p><strong>Жанр:</strong> {{ album.genre }}</p>
+            {% endif %}
+            {% if album.release_year %}
+            <p><strong>Год:</strong> {{ album.release_year }}</p>
+            {% endif %}
+            <div class="album-meta">
+                <span>{{ album.created_at.strftime('%d.%m.%Y') }}</span>
+                <a href="/albums/{{ album.id }}" class="btn btn-small">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <h3>Коллекция пуста</h3>
+    <p>Начните добавлять свои виниловые пластинки!</p>
+    <a href="/albums/new" class="btn m-20">Добавить первый альбом</a>
+</div>
+{% endif %}
+{% endblock %}

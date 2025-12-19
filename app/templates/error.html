@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Ошибка {{ status_code if status_code else '' }} - Vinyl Collection{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <h1>{% if status_code %}{{ status_code }} - {% endif %}Произошла ошибка</h1>
+
+    <div class="error-message">
+        <p>{{ error }}</p>
+    </div>
+
+    <div class="error-actions">
+        <a href="/" class="btn">На главную</a>
+        {% if user %}
+        <a href="/albums" class="btn btn-secondary">К коллекции</a>
+        {% else %}
+        <a href="/login" class="btn btn-secondary">Войти</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vinyl Collection{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text x=%22-.1em%22 y=%22.9em%22 font-size=%2290%22>💽</text></svg>">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">💽 Vinyl Collection</a>
+            <div class="nav-links">
+                {% if user %}
+                    <a href="/albums">Мои альбомы</a>
+                    <a href="/albums/new">Добавить альбом</a>
+                    <div class="user-info">
+                        <span>{{ user.username }}</span>
+                        <a href="/logout" class="btn btn-small">Выйти</a>
+                    </div>
+                {% else %}
+                    <a href="/login">Войти</a>
+                    <a href="/register">Регистрация</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            {% if error %}
+                <div class="alert alert-error">
+                    {{ error }}
+                </div>
+            {% endif %}
+            {% if message %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>© 2025 Vinyl Collection Manager</p>
+            <p>Ваша цифровая коллекция виниловых пластинок</p>
+        </div>
+    </footer>
+</body>
+</html>

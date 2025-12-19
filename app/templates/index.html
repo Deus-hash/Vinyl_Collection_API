@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Vinyl Collection - Главная{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="page-header block">
+        <h1>Добро пожаловать в Vinyl Collection Manager</h1>
+        <p>Управляйте своей коллекцией виниловых пластинок в одном месте</p>
+    </div>
+
+    <div class="features">
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🎵 Каталогизация</h3>
+                <p>Добавляйте и систематизируйте все ваши виниловые пластинки</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Метаданные</h3>
+                <p>Храните всю информацию об альбомах: от года выпуска до состояния пластинки</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔍 Поиск</h3>
+                <p>Быстро находите нужные альбомы по названию, исполнителю или жанру</p>
+            </div>
+            <div class="feature-card">
+                <h3>📱 Доступ везде</h3>
+                <p>Доступ к вашей коллекции с любого устройства</p>
+            </div>
+        </div>
+    </div>
+
+    {% if not user %}
+    <div class="auth-buttons">
+        <a href="/register" class="btn" style="margin-right: 1rem;">Начать сейчас</a>
+        <a href="/login" class="btn btn-secondary">Войти в аккаунт</a>
+    </div>
+    {% else %}
+    <div class="dashboard-link">
+        <a href="/albums" class="btn">Перейти к моей коллекции →</a>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.hero-section {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-header p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.auth-buttons, .dashboard-link {
+    margin-top: 3rem;
+}
+</style>
+{% endblock %}

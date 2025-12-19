@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Успешно! - Vinyl Collection{% endblock %}
+
+{% block content %}
+<div class="success-container">
+    <h1>Успешно!</h1>
+    
+    <div class="success-message">
+        <p>{{ message }}</p>
+        {% if username %}
+        <p>Ваш логин: <strong>{{ username }}</strong></p>
+        {% endif %}
+    </div>
+    
+    <div class="success-actions">
+        <a href="/login" class="btn">Войти в систему</a>
+        <a href="/" class="btn btn-secondary">На главную</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}{% if album and album.id %}Редактирование{% else %}Новый альбом{% endif %} - Vinyl Collection{% endblock %}
+
+{% block content %}
+
+<div class="album-detail">
+    <div class="detail-header">
+        <h2>{% if album and album.id %}Редактировать альбом{% else %}Добавить новый альбом{% endif %}</h2>
+        {% if album and album.id %}
+        <form method="post" action="/albums/{{ album.id }}/delete" style="display: inline;">
+            <button type="submit" class="btn btn-danger" 
+                    onclick="return confirm('Удалить этот альбом?')">
+                Удалить
+            </button>
+        </form>
+        {% endif %}
+    </div>
+
+    <form method="post" 
+          action="{% if album and album.id %}/albums/{{ album.id }}/edit{% else %}/albums/new{% endif %}">
+        
+        <div class="detail-content">
+            <div class="detail-section">
+                <h3>Основная информация</h3>
+                <div class="form-group">
+                    <label for="title">Название альбома *</label>
+                    <input type="text" id="title" name="title" 
+                           value="{{ album.title if album else '' }}" 
+                           class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="artist">Исполнитель *</label>
+                    <input type="text" id="artist" name="artist" 
+                           value="{{ album.artist if album else '' }}" 
+                           class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="genre">Жанр</label>
+                    <input type="text" id="genre" name="genre" 
+                           value="{{ album.genre if album else '' }}" 
+                           class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="release_year">Год выпуска</label>
+                    <input type="number" id="release_year" name="release_year" 
+                           min="1900" max="{{ now().year if now else 2025 }}"
+                           value="{{ album.release_year if album else '' }}"
+                           class="form-control">
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Дополнительная информация</h3>
+
+                <div class="form-group">
+                    <label for="record_label">Лейбл звукозаписи</label>
+                    <input type="text" id="record_label" name="record_label"
+                           value="{{ album.record_label if album else '' }}"
+                           class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Страна выпуска</label>
+                    <input type="text" id="country" name="country"
+                           value="{{ album.country if album else '' }}"
+                           class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="condition">Состояние пластинки</label>
+                    <select id="condition" name="condition" class="form-control">
+                        <option value="">Выберите состояние</option>
+                        <option value="Mint" {% if album and album.condition == 'Mint' %}selected{% endif %}>
+                            Mint (Идеальное)
+                        </option>
+                        <option value="Near Mint" {% if album and album.condition == 'Near Mint' %}selected{% endif %}>
+                            Near Mint (Почти идеальное)
+                        </option>
+                        <option value="Very Good" {% if album and album.condition == 'Very Good' %}selected{% endif %}>
+                            Very Good (Очень хорошее)
+                        </option>
+                        <option value="Good" {% if album and album.condition == 'Good' %}selected{% endif %}>
+                            Good (Хорошее)
+                        </option>
+                        <option value="Fair" {% if album and album.condition == 'Fair' %}selected{% endif %}>
+                            Fair (Удовлетворительное)
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="barcode">Штрих-код</label>
+                    <input type="text" id="barcode" name="barcode"
+                           value="{{ album.barcode if album else '' }}"
+                           class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Заметки</label>
+                    <textarea id="notes" name="notes" class="form-control" rows="4">{{ album.notes if album else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+            <button type="submit" class="btn">
+                {% if album and album.id %}Сохранить изменения{% else %}Добавить альбом{% endif %}
+            </button>
+            <a href="/albums" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const yearInput = document.getElementById('release_year');
+    if (yearInput) {
+        const currentYear = new Date().getFullYear();
+        yearInput.max = currentYear;
+    }
+});
+</script>
+{% endblock %}
